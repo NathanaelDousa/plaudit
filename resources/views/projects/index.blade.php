@@ -1,21 +1,33 @@
-@extends('layouts.base')
+@extends('layouts.admin')
 @section('title', 'Projects')
 @section('content')
-    <div class="row-between">
-        <h1>Projects</h1>
-        <a class="btn" href="{{ route('projects.create') }}">New project</a>
-    </div>
-    @forelse ($projects as $project)
-        <a class="card project-link" href="{{ route('projects.show', $project) }}">
-            <span class="swatch" style="background: {{ $project->brand_color }}"></span>
-            <strong>{{ $project->name }}</strong>
-            <span class="muted">{{ trans_choice('{0} No testimonials yet|{1} 1 testimonial|[2,*] :count testimonials', $project->testimonials_count) }}</span>
-        </a>
-    @empty
-        <div class="card empty">
-            <p><strong>No projects yet.</strong></p>
-            <p class="muted">A project is one product or website you collect testimonials for.</p>
-            <a class="btn" href="{{ route('projects.create') }}">Create your first project</a>
+    <div class="page-head">
+        <div>
+            <h1>Projects</h1>
+            <p class="muted">Each project is one product or website you collect praise for.</p>
         </div>
-    @endforelse
+        @if ($projects->isNotEmpty())<a class="btn" href="{{ route('projects.create') }}">New project</a>@endif
+    </div>
+    @if ($projects->isEmpty())
+        <div class="empty">
+            <h2>Start your first project</h2>
+            <p class="muted">You’ll get a link to send customers, and a page that shows what they say.</p>
+            <a class="btn" href="{{ route('projects.create') }}">New project</a>
+        </div>
+    @else
+        <ul class="project-list">
+            @foreach ($projects as $project)
+                <li>
+                    <a href="{{ route('projects.show', $project) }}">
+                        <span class="swatch" style="background: {{ $project->brand_color }}"></span>
+                        <span class="project-name">{{ $project->name }}</span>
+                        <span class="project-stats">
+                            @if ($project->pending_count)<span class="waiting">{{ $project->pending_count }} to review</span>@endif
+                            <span>{{ $project->approved_count }} published</span>
+                        </span>
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    @endif
 @endsection

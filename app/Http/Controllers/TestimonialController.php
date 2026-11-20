@@ -37,7 +37,7 @@ class TestimonialController extends Controller
             'status' => 'approved',
         ]);
 
-        return redirect()->route('projects.show', [$project, 'status' => 'approved'])->with('status', 'Testimonial added.');
+        return redirect()->route('projects.show', [$project, 'status' => 'approved'])->with('status', 'Testimonial published.');
     }
 
     public function update(Request $request, Project $project, Testimonial $testimonial)

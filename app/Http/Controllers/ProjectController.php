@@ -12,7 +12,10 @@ class ProjectController extends Controller
     public function index()
     {
         return view('projects.index', [
-            'projects' => Project::withCount('testimonials')->latest()->get(),
+            'projects' => Project::withCount([
+                'testimonials as pending_count' => fn ($q) => $q->where('status', 'pending'),
+                'testimonials as approved_count' => fn ($q) => $q->where('status', 'approved'),
+            ])->latest()->get(),
         ]);
     }
 
