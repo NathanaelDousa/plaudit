@@ -31,7 +31,7 @@ On its first visit Plaudit creates its own settings file (with a unique secret k
 ## Install with Docker
 
 ```bash
-git clone https://github.com/<you>/plaudit.git && cd plaudit
+git clone https://github.com/NathanaelDousa/plaudit.git && cd plaudit
 docker compose up -d --build
 ```
 
