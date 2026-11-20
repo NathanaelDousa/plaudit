@@ -1,0 +1,10 @@
+services:
+  plaudit:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - plaudit-data:/data
+volumes:
+  plaudit-data:

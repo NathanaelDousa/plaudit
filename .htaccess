@@ -1,0 +1,9 @@
+# For shared hosting where the upload folder itself is the web root:
+# send every request into public/, so app code, .env and the database are never served.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+<IfModule !mod_rewrite.c>
+    Require all denied
+</IfModule>
